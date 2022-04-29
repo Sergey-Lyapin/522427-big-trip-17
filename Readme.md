@@ -1,7 +1,7 @@
 # Проект «Большое путешествие»
 
 * Студент: [Sergey Lyapin](https://up.htmlacademy.ru/ecmascript/17/user/522427).
-* Наставник: `Неизвестно`.
+* Наставник: [Anton Shapovalov](https://htmlacademy.ru/profile/id978827).
 
 ---
 
