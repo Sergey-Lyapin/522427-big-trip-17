@@ -1,6 +1,6 @@
+import {render} from './render.js';
 import FiltersView from './view/filters-view.js';
 import SortingView from './view/sorting-view.js';
-import {render} from './render.js';
 import WaypointListPresenter from './presenter/waypoint-list-presenter.js';
 
 const siteTripControlsElement = document.querySelector('.trip-controls__filters');
