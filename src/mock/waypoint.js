@@ -7,10 +7,10 @@ const generateDescription = () => {
     'The squeaky wheel gets the grease.',
     'People who live in glass houses should not throw stones.',
     'If you can not beat them, join them.',
-    ];
-    const randomIndex = getRandomInteger(0, descriptions.length - 1);
-    return descriptions[randomIndex];
-  };
+  ];
+  const randomIndex = getRandomInteger(0, descriptions.length - 1);
+  return descriptions[randomIndex];
+};
 const generateOfferType = () => {
   const offersWaypointType = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
   const randomIndex = getRandomInteger(0, offersWaypointType.length-1);
@@ -66,4 +66,3 @@ const generateWaypoint = () => ({
 });
 
 export {generateWaypoint, offers};
-  
