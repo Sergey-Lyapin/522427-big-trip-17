@@ -77,6 +77,7 @@ export default class WaypointView {
   constructor(waypoint) {
     this.waypoint = waypoint;
   }
+  
   getTemplate() {
     return createWaypointTemplate(this.waypoint);
   }
