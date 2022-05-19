@@ -13,9 +13,37 @@ export default class WaypointListPresenter {
     this.#waypointsModel = waypointsModel;
     this.#waypointListWaypoints = [...this.#waypointsModel.waypoints];
     render(this.#waypointListComponent, this.#waypointListContainer);
-    render(new EditFormView(this.#waypointListWaypoints[0]), this.#waypointListComponent.element);
     for (let i = 0; i < this.#waypointListWaypoints.length; i++) {
-      render(new WaypointView(this.#waypointListWaypoints[i]), this.#waypointListComponent.element);
+      this.#renderWaypoint(this.#waypointListWaypoints[i]);
     }
+  };
+  #renderWaypoint = (waypoint) => {
+    const waypointComponent = new WaypointView(waypoint);
+    const editFormComponent = new EditFormView(waypoint);
+
+    const replaceWaypointToEditForm = () => {
+      this.#waypointListComponent.element.replaceChild(editFormComponent.element, waypointComponent.element);
+    };
+    const replaceEditFormToWaypoint = () => {
+      this.#waypointListComponent.element.replaceChild(waypointComponent.element, editFormComponent.element);
+    };
+    waypointComponent.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
+      replaceWaypointToEditForm();
+    });
+    editFormComponent.element.querySelector('form').addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      replaceEditFormToWaypoint();
+    });
+    editFormComponent.element.querySelector('form').addEventListener('keydown', (evt) => {
+      if (evt.code === "Escape")
+      {
+        evt.preventDefault();
+        replaceEditFormToWaypoint();
+      }
+    });
+    editFormComponent.element.querySelector('.event__rollup-btn').addEventListener('click', (evt) => {
+      replaceEditFormToWaypoint();
+    });
+    render(waypointComponent, this.#waypointListComponent.element);
   };
 }
