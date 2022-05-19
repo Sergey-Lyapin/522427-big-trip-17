@@ -74,23 +74,26 @@ const createWaypointTemplate = (waypoint) => {
   );};
 
 export default class WaypointView {
+  #element = null;
+  #waypoint = null;
+
   constructor(waypoint) {
-    this.waypoint = waypoint;
+    this.#waypoint = waypoint;
   }
 
-  getTemplate() {
-    return createWaypointTemplate(this.waypoint);
+  get template() {
+    return createWaypointTemplate(this.#waypoint);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }
