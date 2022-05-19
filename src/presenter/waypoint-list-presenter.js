@@ -17,6 +17,7 @@ export default class WaypointListPresenter {
       this.#renderWaypoint(this.#waypointListWaypoints[i]);
     }
   };
+
   #renderWaypoint = (waypoint) => {
     const waypointComponent = new WaypointView(waypoint);
     const editFormComponent = new EditFormView(waypoint);
@@ -35,13 +36,13 @@ export default class WaypointListPresenter {
       replaceEditFormToWaypoint();
     });
     editFormComponent.element.querySelector('form').addEventListener('keydown', (evt) => {
-      if (evt.code === "Escape")
+      if (evt.code === 'Escape')
       {
         evt.preventDefault();
         replaceEditFormToWaypoint();
       }
     });
-    editFormComponent.element.querySelector('.event__rollup-btn').addEventListener('click', (evt) => {
+    editFormComponent.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
       replaceEditFormToWaypoint();
     });
     render(waypointComponent, this.#waypointListComponent.element);
