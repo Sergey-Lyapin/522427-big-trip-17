@@ -7,7 +7,7 @@ export default class NoWaypointView {
   get template() {
     return createNoWaypointTemplate();
   }
-  
+
   get element() {
     if (!this.#element) {
       this.#element = createElement(this.template);
