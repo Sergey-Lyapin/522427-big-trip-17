@@ -1,6 +1,8 @@
 import WaypointListView from '../view/waypoint-list-view.js';
 import EditFormView from '../view/edit-form-view.js';
 import WaypointView from '../view/waypoint-view.js';
+import NoWaypointView from '../view/no-waypoint-view.js';
+import SortingView from '../view/sorting-view.js';
 import {render} from '../render.js';
 
 export default class WaypointListPresenter {
@@ -8,13 +10,19 @@ export default class WaypointListPresenter {
   #waypointsModel = null;
   #waypointListWaypoints = [];
   #waypointListComponent = new WaypointListView();
+  #sortingComponent = new SortingView();
   init = (waypointListContainer, waypointsModel) => {
     this.#waypointListContainer = waypointListContainer;
     this.#waypointsModel = waypointsModel;
     this.#waypointListWaypoints = [...this.#waypointsModel.waypoints];
-    render(this.#waypointListComponent, this.#waypointListContainer);
-    for (let i = 0; i < this.#waypointListWaypoints.length; i++) {
-      this.#renderWaypoint(this.#waypointListWaypoints[i]);
+    if(this.#waypointListWaypoints.length === 0){
+      render(new NoWaypointView(), this.#waypointListContainer);
+    } else{
+      render (this.#sortingComponent, this.#waypointListContainer);
+      render(this.#waypointListComponent, this.#waypointListContainer);
+      for (let i = 0; i < this.#waypointListWaypoints.length; i++) {
+        this.#renderWaypoint(this.#waypointListWaypoints[i]);
+      }
     }
   };
 
