@@ -179,5 +179,4 @@ export default class EditFormView extends AbstractView {
       }
     this._callback.editEsc();
   };
-
 }
