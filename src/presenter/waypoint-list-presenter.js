@@ -1,9 +1,9 @@
+import { render } from '../framework/render.js';
 import WaypointListView from '../view/waypoint-list-view.js';
 import EditFormView from '../view/edit-form-view.js';
 import WaypointView from '../view/waypoint-view.js';
 import NoWaypointView from '../view/no-waypoint-view.js';
 import SortingView from '../view/sorting-view.js';
-import {render} from '../render.js';
 
 export default class WaypointListPresenter {
   #waypointListContainer = null;
@@ -36,21 +36,16 @@ export default class WaypointListPresenter {
     const replaceEditFormToWaypoint = () => {
       this.#waypointListComponent.element.replaceChild(waypointComponent.element, editFormComponent.element);
     };
-    waypointComponent.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
+    waypointComponent.setEditClickHandler(() => {
       replaceWaypointToEditForm();
     });
-    editFormComponent.element.querySelector('form').addEventListener('submit', (evt) => {
-      evt.preventDefault();
+    editFormComponent.setFormSubmitHandler(() => {
       replaceEditFormToWaypoint();
     });
-    editFormComponent.element.querySelector('form').addEventListener('keydown', (evt) => {
-      if (evt.code === 'Escape')
-      {
-        evt.preventDefault();
-        replaceEditFormToWaypoint();
-      }
+    editFormComponent.setEditEscHandler(() => {
+      replaceEditFormToWaypoint();
     });
-    editFormComponent.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
+    editFormComponent.setEditFormClickHandler(() => {
       replaceEditFormToWaypoint();
     });
     render(waypointComponent, this.#waypointListComponent.element);

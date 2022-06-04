@@ -1,4 +1,4 @@
-import {render} from './render.js';
+import { render } from './framework/render.js';
 import FiltersView from './view/filters-view.js';
 import WaypointListPresenter from './presenter/waypoint-list-presenter.js';
 import WaypointsModel from './model/waypoint-model.js';

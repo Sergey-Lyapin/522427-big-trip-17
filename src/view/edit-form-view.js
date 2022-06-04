@@ -1,4 +1,4 @@
-import {createElement} from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import {humanizeDateAddWaypoint} from '../utils.js';
 import {offers} from '../mock/waypoint.js';
 
@@ -135,11 +135,11 @@ const createEditFormTemplate = (waypoint) => {
   </li>`
   );};
 
-export default class EditFormView {
-  #element = null;
+export default class EditFormView extends AbstractView {
   #waypoint = null;
 
   constructor(waypoint) {
+    super();
     this.#waypoint = waypoint;
   }
 
@@ -147,15 +147,37 @@ export default class EditFormView {
     return createEditFormTemplate(this.#waypoint);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  setFormSubmitHandler = (callback) => {
+    this._callback.formSubmit = callback;
+    this.element.querySelector('form').addEventListener('submit', this.#formSubmitHandler);
+  };
 
-    return this.#element;
-  }
+  #formSubmitHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.formSubmit();
+  };
 
-  removeElement() {
-    this.#element = null;
-  }
+  setEditFormClickHandler = (callback) => {
+    this._callback.editFormClick = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#editFormClickHandler);
+  };
+
+  #editFormClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.editFormClick();
+  };
+
+  setEditEscHandler = (callback) => {
+    this._callback.editEsc = callback;
+    this.element.querySelector('form').addEventListener('keydown', this.#editEscHandler);
+  };
+
+  #editEscHandler = (evt) => {
+    if (evt.code === 'Escape')
+      {
+        evt.preventDefault();
+      }
+    this._callback.editEsc();
+  };
+
 }
