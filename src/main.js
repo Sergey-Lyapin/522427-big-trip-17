@@ -9,7 +9,6 @@ const siteTripEventsElement = document.querySelector('.trip-events');
 const waypointsModel = new WaypointsModel();
 const waypointListPresenter = new WaypointListPresenter();
 const filters = generateFilter();
-console.log(filters);
 
 render(new FiltersView(filters), siteTripControlsElement);
 waypointListPresenter.init(siteTripEventsElement, waypointsModel);

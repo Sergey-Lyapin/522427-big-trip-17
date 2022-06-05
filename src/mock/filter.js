@@ -1,5 +1,5 @@
-import { getRandomInteger } from "../utils.js";
-import { FilterType } from "./const.js";
+import { getRandomInteger } from '../utils.js';
+import { FilterType } from './const.js';
 
 export const generateFilter = () => Object.entries(FilterType).map(
   ([filterName]) => ({
