@@ -175,7 +175,7 @@ export default class EditFormView extends AbstractView {
   #editEscHandler = (evt) => {
     if (evt.code === 'Escape') {
       evt.preventDefault();
+      this._callback.editEsc();
     }
-    this._callback.editEsc();
   };
 }

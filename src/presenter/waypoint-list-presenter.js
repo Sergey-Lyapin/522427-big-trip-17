@@ -1,4 +1,4 @@
-import { render } from '../framework/render.js';
+import { render, replace } from '../framework/render.js';
 import WaypointListView from '../view/waypoint-list-view.js';
 import EditFormView from '../view/edit-form-view.js';
 import WaypointView from '../view/waypoint-view.js';
@@ -31,10 +31,10 @@ export default class WaypointListPresenter {
     const editFormComponent = new EditFormView(waypoint);
 
     const replaceWaypointToEditForm = () => {
-      this.#waypointListComponent.element.replaceChild(editFormComponent.element, waypointComponent.element);
+      replace(editFormComponent, waypointComponent);
     };
     const replaceEditFormToWaypoint = () => {
-      this.#waypointListComponent.element.replaceChild(waypointComponent.element, editFormComponent.element);
+      replace(waypointComponent, editFormComponent);
     };
     waypointComponent.setEditClickHandler(() => {
       replaceWaypointToEditForm();
