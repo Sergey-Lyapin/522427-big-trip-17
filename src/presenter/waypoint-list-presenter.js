@@ -1,9 +1,8 @@
-import { render, replace } from '../framework/render.js';
+import { render } from '../framework/render.js';
 import WaypointListView from '../view/waypoint-list-view.js';
-import EditFormView from '../view/edit-form-view.js';
-import WaypointView from '../view/waypoint-view.js';
 import NoWaypointView from '../view/no-waypoint-view.js';
 import SortingView from '../view/sorting-view.js';
+import WaypointPresenter from './waypoint-presenter.js';
 
 export default class WaypointListPresenter {
   #waypointListContainer = null;
@@ -11,43 +10,42 @@ export default class WaypointListPresenter {
   #waypointListWaypoints = [];
   #waypointListComponent = new WaypointListView();
   #sortingComponent = new SortingView();
+  #noWaypointsComponent = new NoWaypointView();
+
+  constructor(waypointListContainer, waypointsModel) {
+    this.#waypointListContainer = waypointListContainer;
+    this.#waypointsModel = waypointsModel;
+  }
+
   init = (waypointListContainer, waypointsModel) => {
     this.#waypointListContainer = waypointListContainer;
     this.#waypointsModel = waypointsModel;
     this.#waypointListWaypoints = [...this.#waypointsModel.waypoints];
     if(this.#waypointListWaypoints.length === 0){
-      render(new NoWaypointView(), this.#waypointListContainer);
+      this.#renderNoWaypoints();
     } else{
-      render (this.#sortingComponent, this.#waypointListContainer);
-      render(this.#waypointListComponent, this.#waypointListContainer);
-      for (let i = 0; i < this.#waypointListWaypoints.length; i++) {
-        this.#renderWaypoint(this.#waypointListWaypoints[i]);
-      }
+      this.#renderSorting();
+      this.#renderWaypointList();
     }
   };
 
-  #renderWaypoint = (waypoint) => {
-    const waypointComponent = new WaypointView(waypoint);
-    const editFormComponent = new EditFormView(waypoint);
+  #renderNoWaypoints = () => {
+    render(this.#noWaypointsComponent, this.#waypointListContainer);
+  }
 
-    const replaceWaypointToEditForm = () => {
-      replace(editFormComponent, waypointComponent);
-    };
-    const replaceEditFormToWaypoint = () => {
-      replace(waypointComponent, editFormComponent);
-    };
-    waypointComponent.setEditClickHandler(() => {
-      replaceWaypointToEditForm();
-    });
-    editFormComponent.setFormSubmitHandler(() => {
-      replaceEditFormToWaypoint();
-    });
-    editFormComponent.setEditEscHandler(() => {
-      replaceEditFormToWaypoint();
-    });
-    editFormComponent.setEditFormClickHandler(() => {
-      replaceEditFormToWaypoint();
-    });
-    render(waypointComponent, this.#waypointListComponent.element);
+  #renderWaypointList = () => {
+    render(this.#waypointListComponent, this.#waypointListContainer);
+    for (let i = 0; i < this.#waypointListWaypoints.length; i++) {
+      this.#renderWaypoint(this.#waypointListWaypoints[i]);
+    }
+  }
+
+  #renderSorting = () => {
+    render (this.#sortingComponent, this.#waypointListContainer);
+  }
+
+  #renderWaypoint = (waypoint) => {
+    const waypointPresenter = new WaypointPresenter(this.#waypointListComponent.element);
+    waypointPresenter.init(waypoint);
   };
 }
