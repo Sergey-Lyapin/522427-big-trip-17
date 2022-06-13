@@ -1,4 +1,4 @@
-import { render, replace, remove } from '../framework/render.js';
+import { render, replace } from '../framework/render.js';
 import WaypointView from '../view/waypoint-view.js';
 import EditFormView from '../view/edit-form-view.js';
 

@@ -104,5 +104,5 @@ export default class WaypointView extends AbstractView {
     evt.preventDefault();
     this.element.querySelector('.event__favorite-btn').classList.toggle('event__favorite-btn--active');
     this._callback.setFavorite();
-  }
+  };
 }

@@ -34,24 +34,24 @@ export default class WaypointListPresenter {
   #handleWaypointChange = (updatedWaypoint) => {
     this.#waypointListWaypoints = updateItem(this.#waypointListWaypoints, updatedWaypoint);
     this.#waypointPresenter.get(updatedWaypoint.id).init(updatedWaypoint);
-  }
+  };
 
   #renderNoWaypoints = () => {
     render(this.#noWaypointsComponent, this.#waypointListContainer);
-  }
+  };
 
   #renderWaypointList = () => {
     render(this.#waypointListComponent, this.#waypointListContainer);
     this.#renderWaypoints();
-  }
+  };
 
   #renderSorting = () => {
     render (this.#sortingComponent, this.#waypointListContainer);
-  }
+  };
 
   #renderWaypoints = () => {
     this.#waypointListWaypoints.forEach((waypoint) => this.#renderWaypoint(waypoint));
-  }
+  };
 
   #renderWaypoint = (waypoint) => {
     const waypointPresenter = new WaypointPresenter(this.#waypointListComponent.element, this.#handleWaypointChange);
