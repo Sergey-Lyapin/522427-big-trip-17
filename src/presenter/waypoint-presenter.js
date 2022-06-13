@@ -12,7 +12,7 @@ export default class WaypointPresenter {
     this.#waypointsContainer = waypointsContainer;
     this.#changeData = changeData;
   }
-    
+  
   init = (waypoint) => {
     this.#waypoint = waypoint;
 
