@@ -1,4 +1,5 @@
 import {getRandomInteger} from '../utils.js';
+import { nanoid } from 'nanoid';
 
 const generateDescription = () => {
   const descriptions = [
@@ -55,11 +56,11 @@ const offers = [
   },
 ];
 const generateWaypoint = () => ({
+  id: nanoid(),
   basePrice: getRandomInteger(0, 300),
   dateFrom: '2019-07-10T22:55:56.845Z',
   dateTo: '2019-07-11T11:22:13.375Z',
   destination: destination,
-  id: 1,
   isFavorite: false,
   offers: [1, 2],
   type: generateOfferType(),
