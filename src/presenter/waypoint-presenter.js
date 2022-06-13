@@ -8,13 +8,11 @@ export default class WaypointPresenter {
   #editFormComponent = null;
   #changeData = null;
   #waypoint = null;
-  
   constructor(waypointsContainer, changeData) {
     this.#waypointsContainer = waypointsContainer;
     this.#changeData = changeData;
   }
     
-
   init = (waypoint) => {
     this.#waypoint = waypoint;
 
@@ -57,19 +55,17 @@ export default class WaypointPresenter {
   };
 
   #handleFavoriteClick = () => {
-    console.log(this.#waypoint.id);
-    console.log(this.#waypoint.isFavorite);
     this.#changeData({...this.#waypoint, isFavorite: !this.#waypoint.isFavorite});
-    console.log(this.#waypoint.id);
-    console.log(this.#waypoint.isFavorite);
-  }
+  };
 
   #handleEditClick = () => {
     this.#replaceWaypointToEditForm();
   };
+
   #handleFormSubmit = () => {
     this.#replaceEditFormToWaypoint();
   };
+
   #handleFormClick = () => {
     this.#replaceEditFormToWaypoint();
   };
