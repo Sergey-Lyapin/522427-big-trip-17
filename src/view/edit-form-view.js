@@ -166,16 +166,4 @@ export default class EditFormView extends AbstractView {
     evt.preventDefault();
     this._callback.editFormClick();
   };
-
-  setEditEscHandler = (callback) => {
-    this._callback.editEsc = callback;
-    this.element.querySelector('form').addEventListener('keydown', this.#editEscHandler);
-  };
-
-  #editEscHandler = (evt) => {
-    if (evt.code === 'Escape') {
-      evt.preventDefault();
-      this._callback.editEsc();
-    }
-  };
 }
