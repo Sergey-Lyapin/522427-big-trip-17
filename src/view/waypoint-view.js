@@ -19,7 +19,7 @@ const createWaypointTemplate = (waypoint) => {
     if (waypoint.isFavorite) {
       return 'event__favorite-btn--active';
     }
-  }
+  };
 
   const diffHour = () => {
     const hour = Math.round(differenceDate/DIFF_HOUR);

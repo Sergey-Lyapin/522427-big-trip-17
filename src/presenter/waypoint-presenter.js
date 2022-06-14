@@ -15,12 +15,12 @@ export default class WaypointPresenter {
   #changeMode = null;
   #waypoint = null;
   #mode = Mode.DEFAULT;
-  
   constructor(waypointsContainer, changeData, changeMode) {
     this.#waypointsContainer = waypointsContainer;
     this.#changeData = changeData;
     this.#changeMode = changeMode;
   }
+  
   init = (waypoint) => {
     this.#waypoint = waypoint;
 

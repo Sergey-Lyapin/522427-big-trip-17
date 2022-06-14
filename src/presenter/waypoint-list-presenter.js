@@ -61,6 +61,5 @@ export default class WaypointListPresenter {
     const waypointPresenter = new WaypointPresenter(this.#waypointListComponent.element, this.#handleWaypointChange, this.#handleModeChange);
     waypointPresenter.init(waypoint);
     this.#waypointPresenter.set(waypoint.id, waypointPresenter);
-    console.log(this.#waypointPresenter);
   };
 }
