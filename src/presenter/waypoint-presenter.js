@@ -20,6 +20,7 @@ export default class WaypointPresenter {
     this.#changeData = changeData;
     this.#changeMode = changeMode;
   }
+
   init = (waypoint) => {
     this.#waypoint = waypoint;
 
