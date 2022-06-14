@@ -15,6 +15,12 @@ const createWaypointTemplate = (waypoint) => {
   const humanTimeTo = humanizeTime(dateTo);
   const differenceDate = humanizeDifference(dateFrom, dateTo);
 
+  const waypointFavorite = () => {
+    if (waypoint.isFavorite) {
+      return 'event__favorite-btn--active';
+    }
+  }
+
   const diffHour = () => {
     const hour = Math.round(differenceDate/DIFF_HOUR);
     if ( hour > 0) {
@@ -60,7 +66,7 @@ const createWaypointTemplate = (waypoint) => {
                 <ul class="event__selected-offers">
                 ${waypointOffer}
                 </ul>
-                <button class="event__favorite-btn" type="button">
+                <button class="event__favorite-btn ${waypointFavorite()}" type="button">
                   <span class="visually-hidden">Add to favorite</span>
                   <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
                     <path d="M14 21l-8.22899 4.3262 1.57159-9.1631L.685209 9.67376 9.8855 8.33688 14 0l4.1145 8.33688 9.2003 1.33688-6.6574 6.48934 1.5716 9.1631L14 21z"/>
@@ -102,7 +108,6 @@ export default class WaypointView extends AbstractView {
 
   #setFavoriteClickHandler = (evt) => {
     evt.preventDefault();
-    this.element.querySelector('.event__favorite-btn').classList.toggle('event__favorite-btn--active');
     this._callback.setFavorite();
   };
 }

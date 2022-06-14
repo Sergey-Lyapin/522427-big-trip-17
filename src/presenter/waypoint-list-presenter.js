@@ -31,6 +31,10 @@ export default class WaypointListPresenter {
     }
   };
 
+  #handleModeChange = () => {
+    this.#waypointPresenter.forEach((presenter) => presenter.resetView());
+  };
+
   #handleWaypointChange = (updatedWaypoint) => {
     this.#waypointListWaypoints = updateItem(this.#waypointListWaypoints, updatedWaypoint);
     this.#waypointPresenter.get(updatedWaypoint.id).init(updatedWaypoint);
@@ -54,8 +58,9 @@ export default class WaypointListPresenter {
   };
 
   #renderWaypoint = (waypoint) => {
-    const waypointPresenter = new WaypointPresenter(this.#waypointListComponent.element, this.#handleWaypointChange);
+    const waypointPresenter = new WaypointPresenter(this.#waypointListComponent.element, this.#handleWaypointChange, this.#handleModeChange);
     waypointPresenter.init(waypoint);
     this.#waypointPresenter.set(waypoint.id, waypointPresenter);
+    console.log(this.#waypointPresenter);
   };
 }
