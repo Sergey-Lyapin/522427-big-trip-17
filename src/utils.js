@@ -26,4 +26,42 @@ const updateItem = (items, update) => {
   ];
 };
 
-export {getRandomInteger, humanizeData, humanizeClassData, humanizeTime, humanizeDataFromClass, humanizeDifference, humanizeDateAddWaypoint, updateItem};
+const getWeightForNullDate = (dateA, dateB) => {
+  if (dateA === null && dateB === null) {
+    return 0;
+  }
+
+  if (dateA === null) {
+    return 1;
+  }
+
+  if (dateB === null) {
+    return -1;
+  }
+
+  return null;
+};
+
+const sortingDefault = (waypointA, waypointB) => {
+  const weight = getWeightForNullDate(waypointA.dateFrom, waypointB.dateFrom);
+
+  return weight ?? dayjs(waypointA.dateFrom).diff(dayjs(waypointB.dateFrom));
+};
+
+const sortingWaypointTime = (waypointA, waypointB) => {
+  const date1A = dayjs(waypointA.dateFrom);
+  const date2A = dayjs(waypointA.dateTo);
+  const durationWaypointA = date2A.diff(date1A);
+
+  const date1B = dayjs(waypointB.dateFrom);
+  const date2B = dayjs(waypointB.dateTo);
+  const durationWaypointB = date2B.diff(date1B);
+
+  return durationWaypointB - durationWaypointA;
+};
+
+const sortingWaypointPrice = (waypointA, waypointB) => waypointB.basePrice - waypointA.basePrice;
+
+
+
+export { getRandomInteger, humanizeData, humanizeClassData, humanizeTime, humanizeDataFromClass, humanizeDifference, humanizeDateAddWaypoint, updateItem, sortingDefault, sortingWaypointPrice, sortingWaypointTime };
