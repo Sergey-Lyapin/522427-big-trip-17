@@ -62,6 +62,4 @@ const sortingWaypointTime = (waypointA, waypointB) => {
 
 const sortingWaypointPrice = (waypointA, waypointB) => waypointB.basePrice - waypointA.basePrice;
 
-
-
 export { getRandomInteger, humanizeData, humanizeClassData, humanizeTime, humanizeDataFromClass, humanizeDifference, humanizeDateAddWaypoint, updateItem, sortingDefault, sortingWaypointPrice, sortingWaypointTime };
