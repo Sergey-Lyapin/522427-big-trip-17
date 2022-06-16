@@ -3,7 +3,8 @@ import WaypointListView from '../view/waypoint-list-view.js';
 import NoWaypointView from '../view/no-waypoint-view.js';
 import SortingView from '../view/sorting-view.js';
 import WaypointPresenter from './waypoint-presenter.js';
-import { updateItem } from '../utils.js';
+import { updateItem, sortingDefault, sortingWaypointTime, sortingWaypointPrice } from '../utils.js';
+import { SortingType } from '../mock/const.js';
 
 export default class WaypointListPresenter {
   #waypointListContainer = null;
@@ -13,6 +14,7 @@ export default class WaypointListPresenter {
   #sortingComponent = new SortingView();
   #noWaypointsComponent = new NoWaypointView();
   #waypointPresenter = new Map();
+  #currentSortingType = null;
 
   constructor(waypointListContainer, waypointsModel) {
     this.#waypointListContainer = waypointListContainer;
@@ -40,6 +42,38 @@ export default class WaypointListPresenter {
     this.#waypointPresenter.get(updatedWaypoint.id).init(updatedWaypoint);
   };
 
+  #sortingWaypoints = (sortingType) => {
+    switch (sortingType) {
+      case SortingType.PRICE_DOWN:
+        this.#waypointListWaypoints.sort(sortingWaypointPrice);
+        break;
+      case SortingType.TIME_DOWN:
+        this.#waypointListWaypoints.sort(sortingWaypointTime);
+        break;
+      case SortingType.DEFAULT:
+        this.#waypointListWaypoints.sort(sortingDefault);
+        break;
+      default:
+        this.#waypointListWaypoints.sort(sortingDefault);
+    }
+
+    this.#currentSortingType = sortingType;
+  };
+
+  #handleSortingTypeChange = (sortingType) => {
+    if (this.#currentSortingType === sortingType) {
+      return;
+    }
+    this.#sortingWaypoints(sortingType);
+    this.#clearWaypointList();
+    this.#renderWaypointList();
+  };
+
+  #clearWaypointList = () => {
+    this.#waypointPresenter.forEach((presenter) => presenter.destroy());
+    this.#waypointPresenter.clear();
+  };
+
   #renderNoWaypoints = () => {
     render(this.#noWaypointsComponent, this.#waypointListContainer);
   };
@@ -51,9 +85,13 @@ export default class WaypointListPresenter {
 
   #renderSorting = () => {
     render (this.#sortingComponent, this.#waypointListContainer);
+    this.#sortingComponent.setSortingTypeChangeHandler(this.#handleSortingTypeChange);
   };
 
   #renderWaypoints = () => {
+    if(this.#currentSortingType === null){
+      this.#waypointListWaypoints.sort(sortingDefault);
+    }
     this.#waypointListWaypoints.forEach((waypoint) => this.#renderWaypoint(waypoint));
   };
 
