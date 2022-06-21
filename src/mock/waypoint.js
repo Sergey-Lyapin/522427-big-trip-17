@@ -38,68 +38,68 @@ const generateDate = (dayBegin, dayEnd) => {
 };
 
 const generateDestination = () => ({
-    description: generateDescription(),
-    name: generateDestinationName(),
-    pictures: [
-      {
-        src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
-      },
-      {
-        src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
-      },
-      {
-        src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
-      },
-      {
-        src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
-      },
-      {
-        src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
-      }
-    ]
-  });
+  description: generateDescription(),
+  name: generateDestinationName(),
+  pictures: [
+    {
+      src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
+    },
+    {
+      src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
+    },
+    {
+      src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
+    },
+    {
+      src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
+    },
+    {
+      src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
+    }
+  ]
+});
 
 const generateOffers = () => [
-    {
-      type: generateOfferType(),
-      offers: [
-        {
-          id: 1,
-          title: 'Upgrade to a business class',
-          price: 125
-        }, {
-          id: 2,
-          title: 'Choose the radio station',
-          price: 65
-        } ]
-    },
-    {
-      type: generateOfferType(),
-      offers: [
-        {
-          id: 1,
-          title: 'Upgrade to a business class',
-          price: 120
-        }, {
-          id: 2,
-          title: 'Choose the radio station',
-          price: 60
-        } ]
-    },
-    {
-      type: generateOfferType(),
-      offers: [
-        {
-          id: 1,
-          title: 'Upgrade to a business class',
-          price: 130
-        }, {
-          id: 2,
-          title: 'Choose the radio station',
-          price: 70
-        } ]
-    },
-  ];
+  {
+    type: generateOfferType(),
+    offers: [
+      {
+        id: 1,
+        title: 'Upgrade to a business class',
+        price: 125
+      }, {
+        id: 2,
+        title: 'Choose the radio station',
+        price: 65
+      } ]
+  },
+  {
+    type: generateOfferType(),
+    offers: [
+      {
+        id: 1,
+        title: 'Upgrade to a business class',
+        price: 120
+      }, {
+        id: 2,
+        title: 'Choose the radio station',
+        price: 60
+      } ]
+  },
+  {
+    type: generateOfferType(),
+    offers: [
+      {
+        id: 1,
+        title: 'Upgrade to a business class',
+        price: 130
+      }, {
+        id: 2,
+        title: 'Choose the radio station',
+        price: 70
+      } ]
+  },
+];
 
 const offers = generateOffers();
 
