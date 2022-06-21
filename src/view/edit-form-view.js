@@ -22,7 +22,6 @@ const createEditFormTemplate = (waypoint) => {
     ${picturesTemplate(destination.pictures)}
     </div>
     </div>`);
-  
   if (waypointTypeOffer) {
     waypointAddOffer = waypointTypeOffer.offers.map((typeOffer) => {
       const checked = waypoint.offers.includes(typeOffer.id) ? 'checked' : '';
@@ -172,7 +171,7 @@ export default class EditFormView extends AbstractStatefulView {
   });
 
   static parseStateToTask = (state) => {
-    const waypoint = {...state}
+    const waypoint = {...state};
 
     waypoint.type = waypoint.stateType;
     waypoint.destination = waypoint.stateDestination;
@@ -197,7 +196,7 @@ export default class EditFormView extends AbstractStatefulView {
     delete waypoint.stateType;
 
     return waypoint;
-  }
+  };
 
   setFormSubmitHandler = (callback) => {
     this._callback.formSubmit = callback;
