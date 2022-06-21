@@ -23,7 +23,6 @@ export default class WaypointPresenter {
 
   init = (waypoint) => {
     this.#waypoint = waypoint;
-
     const prevWaypointComponent = this.#waypointComponent;
     const prevEditFormComponent = this.#editFormComponent;
 
@@ -92,7 +91,8 @@ export default class WaypointPresenter {
     this.#replaceWaypointToEditForm();
   };
 
-  #handleFormSubmit = () => {
+  #handleFormSubmit = (waypoint) => {
+    this.#changeData(waypoint);
     this.#replaceEditFormToWaypoint();
   };
 

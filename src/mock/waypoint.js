@@ -13,6 +13,16 @@ const generateDescription = () => {
   const randomIndex = getRandomInteger(0, descriptions.length - 1);
   return descriptions[randomIndex];
 };
+
+const generateDestinationName = () => {
+  const names = [
+    'Amsterdam',
+    'Geneva',
+    'Chamonix',
+  ]
+  const randomIndex = getRandomInteger(0, names.length - 1);
+  return names[randomIndex];
+}
 const generateOfferType = () => {
   const offersWaypointType = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
   const randomIndex = getRandomInteger(0, offersWaypointType.length-1);
@@ -26,52 +36,85 @@ const generateDate = (dayBegin, dayEnd) => {
 
   return dayjs().add(daysGap, 'day').add(hoursGap, 'hour').add(minutesGap, 'minute').add(secondsGap, 'second').toDate();
 };
-const destination = {
-  description: generateDescription(),
-  name: 'Chmonix',
-  pictures: [
+
+const generateDestination = () => {
+  return {
+    description: generateDescription(),
+    name: generateDestinationName(),
+    pictures: [
+      {
+        src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
+      },
+      {
+        src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
+      },
+      {
+        src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
+      },
+      {
+        src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
+      },
+      {
+        src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
+      }
+    ]
+  }
+}
+
+const generateOffers = () => {
+  return [
     {
-      src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 10)}`,
-      description: generateDescription()
-    }
+      type: generateOfferType(),
+      offers: [
+        {
+          id: 1,
+          title: 'Upgrade to a business class',
+          price: 125
+        }, {
+          id: 2,
+          title: 'Choose the radio station',
+          price: 65
+        } ]
+    },
+    {
+      type: generateOfferType(),
+      offers: [
+        {
+          id: 1,
+          title: 'Upgrade to a business class',
+          price: 120
+        }, {
+          id: 2,
+          title: 'Choose the radio station',
+          price: 60
+        } ]
+    },
+    {
+      type: generateOfferType(),
+      offers: [
+        {
+          id: 1,
+          title: 'Upgrade to a business class',
+          price: 130
+        }, {
+          id: 2,
+          title: 'Choose the radio station',
+          price: 70
+        } ]
+    },
   ]
-};
-const offers = [
-  {
-    type: generateOfferType(),
-    offers: [
-      {
-        id: 1,
-        title: 'Upgrade to a business class',
-        price: 125
-      }, {
-        id: 2,
-        title: 'Choose the radio station',
-        price: 65
-      } ]
-  },
-  {
-    type: generateOfferType(),
-    offers: [
-      {
-        id: 1,
-        title: 'Upgrade to a business class',
-        price: 120
-      }, {
-        id: 2,
-        title: 'Choose the radio station',
-        price: 60
-      } ]
-  },
-];
+}
+
+const offers = generateOffers();
+
 const generateWaypoint = () => ({
   id: nanoid(),
   basePrice: getRandomInteger(0, 300),
   dateFrom: generateDate(0, 2),
   dateTo: generateDate(3, 5),
-  destination: destination,
+  destination: generateDestination(),
   isFavorite: false,
-  offers: [1, 2],
+  offers: [1, 2, 3],
   type: generateOfferType(),
 });
 

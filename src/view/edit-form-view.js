@@ -1,15 +1,28 @@
-import AbstractView from '../framework/view/abstract-view.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import {humanizeDateAddWaypoint} from '../utils.js';
 import {offers} from '../mock/waypoint.js';
+import { EMPTY_POINT } from '../mock/const.js';
 
 const createEditFormTemplate = (waypoint) => {
-  const {basePrice, destination, type, dateFrom, dateTo} = waypoint;
+  const {basePrice, stateDestination, stateType, dateFrom, dateTo} = waypoint;
 
   const humanDateFrom = humanizeDateAddWaypoint(dateFrom);
   const humanDateTo = humanizeDateAddWaypoint(dateTo);
 
-  const waypointTypeOffer = offers.find((offer) => offer.type === type);
+  const waypointTypeOffer = offers.find((offer) => offer.type === stateType);
   let waypointAddOffer = [];
+
+  const picturesTemplate = (pictures) => pictures.map((picture) => `<img class="event__photo" src="${picture.src}" alt="Event photo">`).join('');
+
+  const destinationTemplate = (destination) => (`
+    <section class="event__section  event__section--destination">
+    <p class="event__destination-description">${destination.description}</p>
+    <div class="event__photos-container">
+    <div class="event__photos-tape">
+    ${picturesTemplate(destination.pictures)}
+    </div>
+    </div>`);
+  
   if (waypointTypeOffer) {
     waypointAddOffer = waypointTypeOffer.offers.map((typeOffer) => {
       const checked = waypoint.offers.includes(typeOffer.id) ? 'checked' : '';
@@ -29,7 +42,7 @@ const createEditFormTemplate = (waypoint) => {
         <div class="event__type-wrapper">
           <label class="event__type  event__type-btn" for="event-type-toggle-1">
             <span class="visually-hidden">Choose event type</span>
-            <img class="event__type-icon" width="17" height="17" src="img/icons/${type}.png" alt="Event type icon">
+            <img class="event__type-icon" width="17" height="17" src="img/icons/${stateType}.png" alt="Event type icon">
           </label>
           <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
   
@@ -87,9 +100,9 @@ const createEditFormTemplate = (waypoint) => {
   
         <div class="event__field-group  event__field-group--destination">
           <label class="event__label  event__type-output" for="event-destination-1">
-            ${type}
+            ${stateType}
           </label>
-          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destination.name}" list="destination-list-1">
+          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${stateDestination.name}" list="destination-list-1">
           <datalist id="destination-list-1">
             <option value="Amsterdam"></option>
             <option value="Geneva"></option>
@@ -114,7 +127,7 @@ const createEditFormTemplate = (waypoint) => {
         </div>
   
         <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-        <button class="event__reset-btn" type="reset">Delete</button>
+        <button class="event__reset-btn" type="reset">${stateDestination.name === ' ' ? 'Cancel' : 'Delete'}</button>
         <button class="event__rollup-btn" type="button">
           <span class="visually-hidden">Open event</span>
         </button>
@@ -128,23 +141,62 @@ const createEditFormTemplate = (waypoint) => {
         </section>
         <section class="event__section  event__section--destination">
           <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-          <p class="event__destination-description">${destination.description}</p>
+          ${destinationTemplate(stateDestination)}
         </section>
       </section>
     </form>
   </li>`
   );};
 
-export default class EditFormView extends AbstractView {
-  #waypoint = null;
+export default class EditFormView extends AbstractStatefulView {
 
-  constructor(waypoint) {
+  constructor(waypoint = EMPTY_POINT) {
     super();
-    this.#waypoint = waypoint;
+    this._state = EditFormView.parseWaypointToState(waypoint);
+    this.#setInnerHandlers();
   }
 
   get template() {
-    return createEditFormTemplate(this.#waypoint);
+    return createEditFormTemplate(this._state);
+  }
+
+  _restoreHandlers = () => {
+    this.#setInnerHandlers();
+    this.setEditFormClickHandler(this._callback.editFormClick);
+    this.setFormSubmitHandler(this._callback.formSubmit);
+  };
+
+  static parseWaypointToState = (waypoint) => ({...waypoint,
+    stateDestination: waypoint.destination,
+    stateType: waypoint.type
+  });
+
+  static parseStateToTask = (state) => {
+    const waypoint = {...state}
+
+    waypoint.type = waypoint.stateType;
+    waypoint.destination = waypoint.stateDestination;
+
+    if(!waypoint.stateDestination){
+      waypoint.destination = {
+        description: ' ',
+        name: ' ',
+        pictures: [
+          {
+            src: 'http://picsum.photos/300/200?r=0.0972568065067317',
+            description: ''
+          }
+        ]
+      };
+    }
+    if(!waypoint.stateType){
+      waypoint.type = 'train';
+    }
+
+    delete waypoint.stateDestination;
+    delete waypoint.stateType;
+
+    return waypoint;
   }
 
   setFormSubmitHandler = (callback) => {
@@ -154,7 +206,7 @@ export default class EditFormView extends AbstractView {
 
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
-    this._callback.formSubmit();
+    this._callback.formSubmit(EditFormView.parseStateToTask(this._state));
   };
 
   setEditFormClickHandler = (callback) => {
@@ -165,5 +217,25 @@ export default class EditFormView extends AbstractView {
   #editFormClickHandler = (evt) => {
     evt.preventDefault();
     this._callback.editFormClick();
+  };
+
+  #typeToggleHandler = (evt) => {
+    evt.preventDefault();
+    this.updateElement({
+      stateType: evt.target.value
+    });
+  };
+
+  #destinationNameToggleHandler = (evt) => {
+    evt.preventDefault();
+    this._state.stateDestination.name= evt.target.value;
+    this.updateElement( {stateDestination:this._state.stateDestination});
+  };
+
+  #setInnerHandlers = () => {
+    this.element.querySelector('.event__type-group')
+      .addEventListener('change', this.#typeToggleHandler);
+    this.element.querySelector('.event__input--destination')
+      .addEventListener('change', this.#destinationNameToggleHandler);
   };
 }
