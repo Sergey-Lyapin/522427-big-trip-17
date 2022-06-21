@@ -37,8 +37,7 @@ const generateDate = (dayBegin, dayEnd) => {
   return dayjs().add(daysGap, 'day').add(hoursGap, 'hour').add(minutesGap, 'minute').add(secondsGap, 'second').toDate();
 };
 
-const generateDestination = () => {
-  return {
+const generateDestination = () => ({
     description: generateDescription(),
     name: generateDestinationName(),
     pictures: [
@@ -58,11 +57,9 @@ const generateDestination = () => {
         src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 100)}`,
       }
     ]
-  };
-};
+  });
 
-const generateOffers = () => {
-  return [
+const generateOffers = () => [
     {
       type: generateOfferType(),
       offers: [
@@ -103,7 +100,6 @@ const generateOffers = () => {
         } ]
     },
   ];
-};
 
 const offers = generateOffers();
 
