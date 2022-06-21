@@ -14,7 +14,7 @@ const WaypointType = {
   CHECK_IN: 'check-in',
   SIGHTSEEING: 'sightseeing',
   RESTARAUNT: 'restaraunt',
-}
+};
 
 const SortingType = {
   DEFAULT: 'default',

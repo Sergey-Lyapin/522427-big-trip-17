@@ -229,7 +229,6 @@ export default class EditFormView extends AbstractStatefulView {
     evt.preventDefault();
     this._state.stateDestination.name= evt.target.value;
     this.updateElement( {stateDestination:this._state.stateDestination});
-    console.log(this._state.stateDestination);
   };
 
   #setInnerHandlers = () => {
