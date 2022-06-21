@@ -4,6 +4,18 @@ const FilterType = {
   PAST: 'past'
 };
 
+const WaypointType = {
+  TRAIN: 'train',
+  TAXI: 'taxi',
+  BUS: 'bus',
+  SHIP: 'ship',
+  DRIVE: 'drive',
+  FLIGHT: 'flight',
+  CHECK_IN: 'check-in',
+  SIGHTSEEING: 'sightseeing',
+  RESTARAUNT: 'restaraunt',
+}
+
 const SortingType = {
   DEFAULT: 'default',
   PRICE_DOWN: 'price-down',
@@ -28,4 +40,4 @@ const EMPTY_POINT = {
   offers: []
 };
 
-export { FilterType, SortingType, EMPTY_POINT };
+export { FilterType, SortingType, EMPTY_POINT, WaypointType };

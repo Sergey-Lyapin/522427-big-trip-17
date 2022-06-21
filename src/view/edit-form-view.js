@@ -1,7 +1,7 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import {humanizeDateAddWaypoint} from '../utils.js';
 import {offers} from '../mock/waypoint.js';
-import { EMPTY_POINT } from '../mock/const.js';
+import { EMPTY_POINT, WaypointType } from '../mock/const.js';
 
 const createEditFormTemplate = (waypoint) => {
   const {basePrice, stateDestination, stateType, dateFrom, dateTo} = waypoint;
@@ -189,7 +189,7 @@ export default class EditFormView extends AbstractStatefulView {
       };
     }
     if(!waypoint.stateType){
-      waypoint.type = 'train';
+      waypoint.type = WaypointType.TRAIN;
     }
 
     delete waypoint.stateDestination;
@@ -229,6 +229,7 @@ export default class EditFormView extends AbstractStatefulView {
     evt.preventDefault();
     this._state.stateDestination.name= evt.target.value;
     this.updateElement( {stateDestination:this._state.stateDestination});
+    console.log(this._state.stateDestination);
   };
 
   #setInnerHandlers = () => {
